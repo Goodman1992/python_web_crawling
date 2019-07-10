@@ -1,13 +1,12 @@
-import requests, bs4, openpyxl
+import requests, bs4, csv
 
 def trim_title(str):
     result=str.replace('\n','').replace('\xa0','').replace('[可播放]','')
     return result
 
-wb=openpyxl.Workbook()
-sheet=wb.active
-sheet.title='new'
-sheet.append(['Rank','Title','Comment','Score','Url'])
+csv_file=open('demo.csv','w',newline='',encoding='utf-8-sig')
+writer=csv.writer(csv_file)
+writer.writerow(['Rank','Title','Comment','Score','Url'])
 
 all=[]
 
@@ -31,5 +30,4 @@ for i in range(len(all)):
     print("Comment: "+all[i][1])
     print("Score: "+ all[i][2])
     print("Url: "+all[i][3])
-    sheet.append([str(i+1),all[i][0],all[i][1],all[i][2],all[i][3]])
-wb.save('DoubanTop250.xlsx')
+    writer.writerow([str(i+1),all[i][0],all[i][1],all[i][2],all[i][3]])
